@@ -1,0 +1,11 @@
+{
+  "name": "db2",
+  "connector": "db2",
+  "dsn": "",
+  "host": "localhost",
+  "port": 50000,
+  "user": "db2inst1",
+  "password": "db234",
+  "database": "testdb",
+  "schema": "db2inst1"
+}
