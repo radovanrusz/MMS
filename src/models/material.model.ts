@@ -1,24 +1,40 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {idInjection: false, db2: {schema: 'DB2INST1', table: 'MATERIAL'}}})
+@model({
+  settings: {idInjection: false, db2: {schema: 'DB2INST1', table: 'MATERIAL'}},
+})
 export class Material extends Entity {
   @property({
     type: 'string',
     length: 10,
     precision: 0,
     scale: 3,
-    db2: {columnName: 'HMOTNOST', dataType: 'DECIMAL', dataLength: 10, dataPrecision: undefined, dataScale: 3, nullable: 'Y'},
+    db2: {
+      columnName: 'HMOTNOST',
+      dataType: 'DECIMAL',
+      dataLength: 10,
+      dataPrecision: undefined,
+      dataScale: 3,
+      nullable: 'Y',
+    },
   })
   hmotnost?: string;
 
   @property({
     type: 'number',
-    required: true,
+    required: false,
     length: 4,
     precision: 0,
     scale: 0,
     id: 1,
-    db2: {columnName: 'ID', dataType: 'INTEGER', dataLength: 4, dataPrecision: undefined, dataScale: 0, nullable: 'N'},
+    db2: {
+      columnName: 'ID',
+      dataType: 'INTEGER',
+      dataLength: 4,
+      dataPrecision: undefined,
+      dataScale: 0,
+      nullable: 'N',
+    },
   })
   id: number;
 
@@ -27,7 +43,14 @@ export class Material extends Entity {
     length: 12,
     precision: 0,
     scale: 0,
-    db2: {columnName: 'KMAT', dataType: 'CHARACTER', dataLength: 12, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
+    db2: {
+      columnName: 'KMAT',
+      dataType: 'CHARACTER',
+      dataLength: 12,
+      dataPrecision: undefined,
+      dataScale: 0,
+      nullable: 'Y',
+    },
   })
   kmat?: string;
 
@@ -36,7 +59,14 @@ export class Material extends Entity {
     length: 10,
     precision: 0,
     scale: 3,
-    db2: {columnName: 'MNOZSTVI', dataType: 'DECIMAL', dataLength: 10, dataPrecision: undefined, dataScale: 3, nullable: 'Y'},
+    db2: {
+      columnName: 'MNOZSTVI',
+      dataType: 'DECIMAL',
+      dataLength: 10,
+      dataPrecision: undefined,
+      dataScale: 3,
+      nullable: 'Y',
+    },
   })
   mnozstvi?: string;
 
@@ -45,7 +75,14 @@ export class Material extends Entity {
     length: 12,
     precision: 0,
     scale: 0,
-    db2: {columnName: 'MVM', dataType: 'CHARACTER', dataLength: 12, dataPrecision: undefined, dataScale: 0, nullable: 'Y'},
+    db2: {
+      columnName: 'MVM',
+      dataType: 'CHARACTER',
+      dataLength: 12,
+      dataPrecision: undefined,
+      dataScale: 0,
+      nullable: 'Y',
+    },
   })
   mvm?: string;
 
