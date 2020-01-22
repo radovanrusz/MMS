@@ -36,7 +36,7 @@ export class Material extends Entity {
       nullable: 'N',
     },
   })
-  id: number;
+  ID: number;
 
   @property({
     type: 'string',

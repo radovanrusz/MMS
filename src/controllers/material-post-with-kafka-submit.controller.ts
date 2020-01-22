@@ -1,5 +1,5 @@
 import {repository, IsolationLevel} from '@loopback/repository';
-import {post, getModelSchemaRef, requestBody} from '@loopback/rest';
+import {post, put, param, getModelSchemaRef, requestBody} from '@loopback/rest';
 import {Material} from '../models';
 import {MaterialWithTxRepository} from '../repositories';
 import {KafkaClientService} from '../services';
@@ -81,5 +81,20 @@ export class MaterialPostWithKafkaSubmitController {
       .catch(error => {
         return Promise.reject(error);
       });
+  }
+
+  @put('/mms/{id}', {
+    responses: {
+      '204': {
+        description: 'Material PUT success',
+      },
+    },
+  })
+  async replaceById(
+    @param.path.number('id') id: number,
+    @requestBody() material: Material,
+  ): Promise<void> {
+    console.log(`id: ${id}, material: ${JSON.stringify(material)}`);
+    //await this.materialWithTxRepository.replaceById(id, material);
   }
 }

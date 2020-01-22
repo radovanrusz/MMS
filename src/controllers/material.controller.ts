@@ -151,7 +151,7 @@ export class MaterialController {
     await this.materialRepository.updateById(id, material);
   }
 
-  @put('/materials/{id}', {
+  @put('/materials/{ID}', {
     responses: {
       '204': {
         description: 'Material PUT success',
@@ -159,7 +159,7 @@ export class MaterialController {
     },
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.number('ID') id: number,
     @requestBody() material: Material,
   ): Promise<void> {
     await this.materialRepository.replaceById(id, material);
