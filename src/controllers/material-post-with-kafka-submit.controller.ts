@@ -37,6 +37,7 @@ export class MaterialPostWithKafkaSubmitController {
     console.log(
       `C: running post with incoming material: ${JSON.stringify(material)}`,
     );
+
     const {id, kmat, mvm, hmotnost, mnozstvi} = material;
 
     //vytvoreni transakce, timeout pro rollback 3sec
@@ -46,37 +47,39 @@ export class MaterialPostWithKafkaSubmitController {
     });
 
     //insert v ramci transakce
-    const result1 = await this.materialWithTxRepository.create(material, {
-      transaction: tx,
-    });
-    console.log(
-      `C db update result: ${JSON.stringify(
-        result1,
-      )} -> going to commit/rollback`,
-    );
+    // const result1 = await this.materialWithTxRepository.create(material, {
+    //   transaction: tx,
+    // });
 
-    //Prace s Kafka je take externalizovano do sdilene sluzby
-    try {
-      const result2 = await this.kafkaClientServices.sendEventP(
-        id,
-        kmat,
-        mvm,
-        'test',
-        hmotnost,
-        mnozstvi,
-      );
-      console.log(
-        `C kafka submit result: ${JSON.stringify(result2)} -> going to commit`,
-      );
-      await tx.commit();
-      return result1;
-    } catch (err) {
-      console.log(
-        `C kafka submit failure: ${JSON.stringify(err)} -> going to rollback`,
-      );
-      await tx.rollback();
-    }
-
-    return result1;
+    return this.materialWithTxRepository
+      .create(material, {
+        transaction: tx,
+      })
+      .then(result1 => {
+        console.log(`insert ok: ${JSON.stringify(result1)}`);
+        this.kafkaClientServices
+          .sendEventP(id, kmat, mvm, 'test', hmotnost, mnozstvi)
+          .then(async result2 => {
+            console.log(
+              `C kafka submit result: ${JSON.stringify(
+                result2,
+              )} -> going to commit`,
+            );
+            await tx.commit();
+            return result1;
+          })
+          .catch(async err => {
+            console.log(
+              `C kafka submit failure: ${JSON.stringify(
+                err,
+              )} -> going to rollback`,
+            );
+            await tx.rollback();
+          });
+        return result1;
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
   }
 }

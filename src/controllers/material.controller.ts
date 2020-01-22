@@ -23,7 +23,7 @@ import {MaterialRepository} from '../repositories';
 export class MaterialController {
   constructor(
     @repository(MaterialRepository)
-    public materialRepository : MaterialRepository,
+    public materialRepository: MaterialRepository,
   ) {}
 
   @post('/materials', {
@@ -59,7 +59,8 @@ export class MaterialController {
     },
   })
   async count(
-    @param.query.object('where', getWhereSchemaFor(Material)) where?: Where<Material>,
+    @param.query.object('where', getWhereSchemaFor(Material))
+    where?: Where<Material>,
   ): Promise<Count> {
     return this.materialRepository.count(where);
   }
@@ -80,7 +81,8 @@ export class MaterialController {
     },
   })
   async find(
-    @param.query.object('filter', getFilterSchemaFor(Material)) filter?: Filter<Material>,
+    @param.query.object('filter', getFilterSchemaFor(Material))
+    filter?: Filter<Material>,
   ): Promise<Material[]> {
     return this.materialRepository.find(filter);
   }
@@ -102,7 +104,8 @@ export class MaterialController {
       },
     })
     material: Material,
-    @param.query.object('where', getWhereSchemaFor(Material)) where?: Where<Material>,
+    @param.query.object('where', getWhereSchemaFor(Material))
+    where?: Where<Material>,
   ): Promise<Count> {
     return this.materialRepository.updateAll(material, where);
   }
@@ -121,7 +124,8 @@ export class MaterialController {
   })
   async findById(
     @param.path.number('id') id: number,
-    @param.query.object('filter', getFilterSchemaFor(Material)) filter?: Filter<Material>
+    @param.query.object('filter', getFilterSchemaFor(Material))
+    filter?: Filter<Material>,
   ): Promise<Material> {
     return this.materialRepository.findById(id, filter);
   }
